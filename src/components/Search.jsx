@@ -3,9 +3,12 @@ import { useGlobalContext } from "../context";
 
 export const Search = () => {
     const [text, setText] = useState('')
-    const {setSearchTerm} = useGlobalContext()
+    const {setSearchTerm, setPageNumber} = useGlobalContext()
+ 
+
     const handleChange = (e)=>{
         setText(e.target.value)
+        setPageNumber(1)
     }
     const handleSubmit = (e) => {
         e.preventDefault()     

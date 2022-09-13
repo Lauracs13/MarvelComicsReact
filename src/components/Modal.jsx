@@ -14,9 +14,9 @@ export const Modal = () => {
           className="img modal-img"
         />
         <div className="modal-content">
-          <button onClick={closeModal}>close</button>
+          <button className="close-btn" onClick={closeModal}>Close</button>
           <h4>{selectedComic.title}</h4>
-          <h5>Description:</h5>
+          {selectedComic.description && <h5>Description:</h5>}
           <p>{selectedComic.description}</p>
 
           {selectedComic.characters.items.length > 0 && <h5>Characters:</h5>}

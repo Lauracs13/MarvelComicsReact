@@ -203,8 +203,9 @@ ul {
   text-align:center;
 }
 .favorites-img{
-  width:60px;
-  border-radius:50%;
+  height:100px;
+  width: 70px;
+  border-radius:10%;
   border:5px solid var(--white);
   cursor:pointer;
 }
@@ -313,16 +314,7 @@ cursor:pointer;
 .modal-content p{
   color:var(--grey-600);
 }
-.modal-content a{
-  display:block;
-  color:var(--primary-500);
-  margin-bottom:1rem;
-  text-decoration:underline;
-  transition:var(--transition);
-}
-.modal-content a:hover{
-  color:var(--black)
-}
+
 .close-btn{
   background:var(--red-dark);
   color:var(--white);

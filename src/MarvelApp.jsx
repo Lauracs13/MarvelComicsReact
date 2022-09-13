@@ -7,11 +7,11 @@ import {Search} from "./components/Search";
 import './styles.css';
 
 export const MarvelApp = () => {
-  const {showModal} = useGlobalContext()
+  const {showModal, favorites} = useGlobalContext()
   return (
     <div>
       <Search />
-      <Favorites />
+     {favorites.length > 0 && <Favorites />}  
       <Comics />
      {showModal && <Modal />} 
     </div>

@@ -3,7 +3,7 @@ import { useGlobalContext } from "../context";
 import {AiOutlineHeart} from 'react-icons/ai'
 
 export const Comics = () => {
-    const {comics, loading, selectComic} = useGlobalContext()
+    const {comics, loading, selectComic, addToFavorites} = useGlobalContext()
    
 if(loading){
     return <section className="section">
@@ -25,7 +25,7 @@ return <article key={comic.id} className="single-comic">
     <img src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`} className="img" onClick={()=>selectComic(comic.id)}/>
     <footer>
         <h5>{comic.title}</h5>
-        <button className="like-btn"><AiOutlineHeart/></button>
+        <button className="like-btn" onClick={()=> addToFavorites(comic.id)}><AiOutlineHeart/></button>
     </footer>
 </article>
     })}
