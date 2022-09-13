@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-
 const AppContext = React.createContext();
 
 let allComicsURL =
@@ -11,20 +10,31 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [comics, setComics] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [pageNumber, setPageNumber] = useState(1)
 
   const [showModal, setshowModal] = useState(false);
   const [selectedComic, setselectedComic] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
-  const fetchComics = async (url) => {
+  const fetchComics = async (url, searchTerm) => {
     setLoading(true);
     try {
       const response = await axios(url);
       const result = response.data.data.results;
-      console.log(result);
-      if (result) {
-        setComics(result);
+      let filteredResult;
+      if (searchTerm.length === 0) {
+        filteredResult = result;
+      } else {
+        filteredResult = result.filter(
+          (comic) =>
+            comic.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            comic.characters.items
+              .map((item) => item.name.toLowerCase())
+              .includes(searchTerm.toLowerCase())
+        );
+      }
+      console.log(filteredResult);
+      if (filteredResult) {
+        setComics(filteredResult);
       } else {
         setComics([]);
       }
@@ -47,7 +57,6 @@ const AppProvider = ({ children }) => {
   };
 
   const addToFavorites = (id) => {
-
     const alreadyFavorite = favorites.find((comic) => comic.id === id);
     if (alreadyFavorite) return;
     const comic = comics.find((comic) => comic.id === id);
@@ -60,12 +69,8 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (searchTerm.length === 0) {
-      fetchComics(`${allComicsURL}`);
-    } else {
-      fetchComics(`${allComicsURL}&titleStartsWith=${searchTerm}`);
-    }
-  }, [searchTerm, pageNumber]);
+    fetchComics(`${allComicsURL}`, searchTerm);
+  }, [searchTerm]);
   return (
     <AppContext.Provider
       value={{
@@ -79,7 +84,6 @@ const AppProvider = ({ children }) => {
         addToFavorites,
         removeFromFavorites,
         favorites,
-        setPageNumber
       }}
     >
       {children}
